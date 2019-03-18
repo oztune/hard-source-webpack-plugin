@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const fs = require('fs');
+const fs = require('graceful-fs');
 const path = require('path');
 
 const lodash = require('lodash');
@@ -433,10 +433,8 @@ class HardSourceWebpackPlugin {
     const TransformModuleErrorsPlugin = require('./lib/TransformModuleErrorsPlugin');
     const SupportExtractTextPlugin = require('./lib/SupportExtractTextPlugin');
     let SupportMiniCssExtractPlugin;
-    let ExcludeMiniCssModulePlugin;
     if (webpackFeatures.generator) {
       SupportMiniCssExtractPlugin = require('./lib/SupportMiniCssExtractPlugin');
-      ExcludeMiniCssModulePlugin = require('./lib/ExcludeMiniCssModulePlugin');
     }
     const TransformDependencyBlockPlugin = require('./lib/TransformDependencyBlockPlugin');
     const TransformBasicDependencyPlugin = require('./lib/TransformBasicDependencyPlugin');
@@ -479,7 +477,6 @@ class HardSourceWebpackPlugin {
 
     if (SupportMiniCssExtractPlugin) {
       new SupportMiniCssExtractPlugin().apply(compiler);
-      new ExcludeMiniCssModulePlugin().apply(compiler);
     }
 
     new TransformDependencyBlockPlugin({
